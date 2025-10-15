@@ -1,21 +1,22 @@
-const UserModel = require("../models/UserModel")
+const UserModel = require("../models/UserModel");
 
-const isActivated = async (req,res,next) => {
-  const {firstName} = req.body;
+const isActivated = async (req, res, next) => {
+  const { email } = req.body;
 
   try {
-    let user = await UserModel.findOne({firstName,active:true})
     
+    const user = await UserModel.findOne({ email, active: true });
+
     if (user) {
-        req.locals = user
-        next()
-    }else{
-        next(new Error("user nije potvrdjen"))
+      req.locals = user; 
+      next();
+    } else {
+      return res.render("auth/login", { errors: { email: "Email nije potvrđen" } });
     }
-    
+
   } catch (error) {
-    next(error)
-    
+    next(error);
   }
-}
-module.exports = isActivated
+};
+
+module.exports = isActivated;
