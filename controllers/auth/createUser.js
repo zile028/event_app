@@ -23,7 +23,7 @@ const createUser = async (req, res, next) => {
 
        
         if (Object.keys(errors).length > 0) {
-            return res.render("auth/registarView", { errors });
+            return res.render("auth/registerView", { errors });
         }
 
         // Provera da li korisnik već postoji

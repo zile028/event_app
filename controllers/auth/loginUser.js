@@ -11,8 +11,8 @@ const loginUser = async (req, res, next) => {
       return res.render("auth/login", { errors });
     }
 
-    
     const isMatch = await bcrypt.compare(password, user.password);
+
     if (!isMatch) {
       errors.password = "Pogrešna lozinka.";
       return res.render("auth/login", { errors });
