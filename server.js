@@ -1,13 +1,17 @@
 const express = require("express");
-const {PORT, MONGODB_URL} = require("./config");
+const {PORT, MONGODB_URL, SESSION_CONFIG} = require("./config");
 const path = require("node:path");
 const mongoose = require("mongoose");
+const session = require("express-session");
 const server = express();
 
 server.use(express.static(path.join(__dirname, "public")));
+server.use(express.static(path.join(__dirname, "public/uploads")));
 server.set("view engine", "ejs");
 server.use(express.urlencoded({extended: true}));
-    
+
+server.use(session(SESSION_CONFIG));
+
 mongoose.connect(MONGODB_URL)
     .then(() => console.log("MongoDb connected"))
     .catch((error) => console.log(error));

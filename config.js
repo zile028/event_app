@@ -1,15 +1,25 @@
-const MAIL_PASSWORD = "hempduvilcdkoafd "
-const MAIL_USER = "petafipedjaradic@gmail.com"
-const PORT = 3000
+const MAIL_PASSWORD = "hempduvilcdkoafd ";
+const MAIL_USER = "petafipedjaradic@gmail.com";
+const PORT = 3000;
 const MAIL_CONFOG = {
-        host: "smtp.gmail.com",
-        port: 587,
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+        user: MAIL_USER,
+        pass: MAIL_PASSWORD
+    }
+};
+const SESSION_CONFIG = {
+    name: "event-app",
+    resave: false,
+    secret: "b8646bd4ed7273de1ccb",
+    saveUninitialized: true,
+    cookie: {
         secure: false,
-        auth: {
-            user: MAIL_USER,
-            pass: MAIL_PASSWORD
-        }
-}
+        maxAge: 1000 * 60 * 60 * 24
+    }
+};
 
 module.exports = {
     PORT: 3000,
@@ -17,5 +27,6 @@ module.exports = {
     AVATAR_IMG: "user_avatar.png",
     MAIL_CONFOG,
     MAIL_USER,
-    SERVER_URL : `http://localhost:${PORT}`
+    SERVER_URL: `http://localhost:${PORT}`,
+    SESSION_CONFIG
 };
