@@ -1,41 +1,66 @@
 <%- include("../partials/top") %>
-<%- include("../partials/navbar") %>
-<%- include("../partials/sidebar") %>
-<!-- ============================================================== -->
-<!-- Page wrapper  -->
-<!-- ============================================================== -->
-<div class="page-wrapper">
-    <!-- ============================================================== -->
-    <!-- Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Create event</h4>
-            </div>
-        </div>
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Container fluid  -->
-    <!-- ============================================================== -->
-    <div class="container-fluid">
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Container fluid  -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- footer -->
-    <!-- ============================================================== -->
-    <footer class="footer text-center">
-        All Rights Reserved by Matrix-admin. Designed and Developed by
-        <a href="https://www.wrappixel.com">WrapPixel</a>.
-    </footer>
-    <!-- ============================================================== -->
-    <!-- End footer -->
-    <!-- ============================================================== -->
-</div>
+    <%- include("../partials/navbar") %>
+        <%- include("../partials/sidebar") %>
+            <!-- ============================================================== -->
+            <!-- Page wrapper  -->
+            <!-- ============================================================== -->
+            <div class="page-wrapper">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="page-breadcrumb">
+                    <div class="row">
+                        <div class="col-12 d-flex no-block align-items-center">
+                            <h4 class="page-title">Create event</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Container fluid  -->
+                <!-- ============================================================== -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4 offset-md-3">
+                            <form action="/event/createEvent" method="post" enctype="multipart/form-data">
+                                <input class="form-control mb-3" type="text" name="title" placeholder="Title">
+                                <label for="start">Pocetak eventa</label>
+                                <input class="form-control mb-3" type="date" name="startAt" id="start">
+                                <label for="end">Kraj eventa</label>
+                                <input class="form-control mb-3" type="date" name="endAt"  id="">
+                                <select class="form-control mb-3" name="user" id="">
+                                    <% users.forEach(user=> { %>
+                                        <option value="<%= user._id %>">
+                                            <%= user.firstName %>
+                                                
+                                        </option>
+                                        <% }) %>
+                                </select>
+                                <textarea class="form-control mb-3" name="decription" placeholder="description"
+                                    id=""></textarea>
+                                <input type="file" name="thumbnail" id="" class="form-control mt-3 mb-2">
+                                <button class="btn btn-primary">Save</button>
+                            </form>
 
-<%- include("../partials/bottom") %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center">
+                All Rights Reserved by Matrix-admin. Designed and Developed by
+                <a href="https://www.wrappixel.com">WrapPixel</a>.
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+            </div>
+
+            <%- include("../partials/bottom") %>
