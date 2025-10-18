@@ -17,7 +17,7 @@ const EventSchema = new Schema({
             required: [true, "Detalji dogadjaja su obavezni!"],
             min: [10, "Minimalana duzina je 10!"]
         },
-        user: {type: Schema.ObjectId, required: [true, "Obavezno je dodati autora!"]},
+        user: {type: Schema.ObjectId,ref: "users", required: [true, "Obavezno je dodati autora!"]},
         likes: [UserSchema],
         startAt: {type: Date, required: [true, "Pocetak dogadjaja je obavezan!"]},
         endAt: {type: Date, required: [true, "Kraj dogadjaja je obavezan!"]}
