@@ -5,9 +5,7 @@ const galleryView = async (req, res) => {
     try {
         const event = await EventModel.find();
         console.log(event);
-
-
-        const events = await EventModel.find().populate("user", "firstName");
+        const events = await EventModel.find();
 
         res.render("event/galleryView", { user: req.session.user, event: events, dayjs });
 
