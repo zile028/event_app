@@ -1,41 +1,106 @@
-<%- include("../partials/top") %>
-<%- include("../partials/navbar") %>
-<%- include("../partials/sidebar") %>
+<%- include("../partials/top") %> <%- include("../partials/navbar") %> <%-
+include("../partials/sidebar") %>
 <!-- ============================================================== -->
 <!-- Page wrapper  -->
 <!-- ============================================================== -->
 <div class="page-wrapper">
-    <!-- ============================================================== -->
-    <!-- Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Create event</h4>
-            </div>
-        </div>
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Create event</h4>
+      </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- End Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Container fluid  -->
-    <!-- ============================================================== -->
-    <div class="container-fluid">
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <% if (typeof message !== 'undefined' && message) { %>
+        <div class="alert alert-info text-center"><%= message %></div>
+        <% } %>
+        <form
+          action="/event/create"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="form-group">
+            <label for="title">Naslov događaja</label>
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              name="title"
+              minlength="5"
+              required
+            />
+          </div>
+          <div class="form-group mt-2">
+            <label for="thumbnail">Naslovna slika</label>
+            <input
+              type="file"
+              class="form-control"
+              id="thumbnail"
+              name="thumbnail"
+              accept="image/*"
+              required
+            />
+          </div>
+          <div class="form-group mt-2">
+            <label for="description">Detalji događaja</label>
+            <textarea
+              class="form-control"
+              id="description"
+              name="description"
+              minlength="10"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+          <div class="form-group mt-2">
+            <label for="startAt">Početak događaja</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="startAt"
+              name="startAt"
+              required
+            />
+          </div>
+          <div class="form-group mt-2">
+            <label for="endAt">Kraj događaja</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="endAt"
+              name="endAt"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">
+            Kreiraj događaj
+          </button>
+        </form>
+      </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- End Container fluid  -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- footer -->
-    <!-- ============================================================== -->
-    <footer class="footer text-center">
-        All Rights Reserved by Matrix-admin. Designed and Developed by
-        <a href="https://www.wrappixel.com">WrapPixel</a>.
-    </footer>
-    <!-- ============================================================== -->
-    <!-- End footer -->
-    <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
 </div>
 
 <%- include("../partials/bottom") %>
