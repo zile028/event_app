@@ -45,17 +45,14 @@
                       <img src="/upload/<%= evt.thumbnail %>" alt="slika" class="img-fluid mb-2"
                         style="max-height:150px; object-fit:cover;">
                       <% } %>
-                        
-                       
-                        <span>User:</span>
+                         <span>User:</span>
                         <%= (userMap[evt.user.toString()] && userMap[evt.user.toString()].firstName) || 'Nepoznato' %>
                           <%= (userMap[evt.user.toString()] && userMap[evt.user.toString()].lastName) || '' %>
-                            <!-- ...existing code... -->
 
 
 
-                            <hr>
-                            <%= evt.decription %>
+                          <hr>
+                          <%= evt.decription %>
 
                   </div>
 
