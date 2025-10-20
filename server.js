@@ -22,6 +22,7 @@ mongoose
 
 server.use(require("./routes"));
 
+// Start servera
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
