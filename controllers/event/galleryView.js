@@ -10,8 +10,8 @@ const galleryView = async (req, res) => {
     let offset = (page - 1) * limit;
     try {
         const events = await EventModel.aggregate([
-            {$skip: offset},
-            {$limit: limit},
+            // {$skip: offset},
+            // {$limit: limit},
             {
                 $lookup: {
                     from: "users",
@@ -30,7 +30,8 @@ const galleryView = async (req, res) => {
                     ]
                 }
             },
-            {$unwind: "$user"}
+            {$unwind: "$user"},
+            
 
         ]);
 
