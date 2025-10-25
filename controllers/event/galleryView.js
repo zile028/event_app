@@ -10,8 +10,8 @@ const galleryView = async (req, res) => {
     let offset = (page - 1) * limit;
     try {
         const events = await EventModel.aggregate([
-            // {$skip: offset},
-            // {$limit: limit},
+            {$skip: offset},
+            {$limit: limit},
             {
                 $lookup: {
                     from: "users",
@@ -26,22 +26,30 @@ const galleryView = async (req, res) => {
                                 lastName: 1,
                                 avatar: 1
                             }
-                        }
+                        },
+                        {$unwind: "$user"}
+
                     ]
                 }
-            },
-            {$unwind: "$user"},
-            
+            }]
+        );
 
-        ]);
+        // Izračunaj ukupan broj događaja za paginaciju
+        const totalEvents = await EventModel.countDocuments();
+        const totalPages = Math.ceil(totalEvents / limit);
 
-        res.render("event/galleryView", {user: req.session.user, events: events, dayjs});
+        res.render("event/galleryView", {
+            user: req.session.user,
+            events: events,
+            dayjs,
+            page,
+            limit,
+            totalPages
 
+        });
     } catch (error) {
         res.status(500).send(error.message);
     }
-
-
 };
 
 module.exports = galleryView;

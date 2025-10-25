@@ -1,0 +1,5 @@
+<% if (user && String(user._id) === String(evt.user._id) || user.role === "admin") { %>
+    <form action="/event/delete/<%= evt._id %>" method="post" class="mt-2">
+        <button class="btn btn-danger btn-sm px-3">Delete</button>
+    </form>
+<% } %>

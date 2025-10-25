@@ -30,7 +30,7 @@ const deleteEvent = async (req, res) => {
             fs.unlinkSync(path.join(UPLOAD_DIR, thumbnail));
         }
 
-        console.log(req.headers.referer);
+        
         const previousPage = req.get("referer");
         return res.redirect(previousPage || "/event");
 
