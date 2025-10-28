@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const UserModel = require("../../models/UserModel");
 const nodemailer = require("nodemailer");
-const { MAIL_CONFOG, MAIL_USER, SERVER_URL } = require("../../config");
+const { MAIL_CONFIG, MAIL_USER, SERVER_URL } = require("../../config");
 
 const salt = 10;
 
@@ -10,7 +10,7 @@ const createUser = async (req, res, next) => {
     const errors = {};
     const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    const transporter = nodemailer.createTransport(MAIL_CONFOG);
+    const transporter = nodemailer.createTransporter(MAIL_CONFIG);
 
     try {
        
