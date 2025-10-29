@@ -2,31 +2,23 @@ const EventModel = require("../../models/EventModel");
 
 const likeEvent = async (req, res) => {
     try {
-        const user = req.session.user; 
-        const { id } = req.params;     
-        const error = {}
+        const user = req.session.user;
+        const {id} = req.params;
 
-        if (!user) {
-            return res.redirect("/auth/login");
-        }
+        const event = await EventModel.find({"_id": id, "likes.id": user._id});
 
-        const event = await EventModel.findById(id);
-        if (!event){
-            error.message = "Event ne postoji";
-        } 
+        if (event.length === 0) {
+            const updateEvent = await EventModel.updateOne(
+                {"_id": id, "likes.id": {$not: {$eq: user._id}}}
+                , {$push: {likes: {id: user._id, fullName: user.firstName}}});
 
-        // ako si vec lajovao
-        const liked = event.likes.find((like) => like.id.toString() === user._id.toString());
-
-        if (liked) {
-            // uklanjanje lajka
-            event.likes = event.likes.filter((like) => like.id.toString() !== user._id.toString());
         } else {
-            event.likes.push({ id: user._id, fullName: user.firstName  });
+            const updateEvent = await EventModel.updateOne(
+                {"_id": id, "likes.id": user._id}
+                , {$pull: {likes: {id: user._id}}});
         }
 
-        await event.save();
-             
+
         const previousPage = req.get("referer");
         return res.redirect(previousPage || "/event");
     } catch (err) {

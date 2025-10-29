@@ -6,7 +6,7 @@ router.get("/", isLogged, (req, res) => {
 });
 
 router.use("/auth", require("./auth"));
-router.use("/event", isLogged, require("./event"));
+router.use("/event", require("./event"));
 router.use("/user", require("./user"));
 
 module.exports = router;
