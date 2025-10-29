@@ -3,7 +3,7 @@ const UserModel = require("../../models/UserModel");
 const listUsers = async (req, res) => {
   try {
    
-    const users = await UserModel.find().sort({ firstName: 1 });
+    const users = await UserModel.find();
 
     res.render("user/listUsers", {
       users,
