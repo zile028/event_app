@@ -1,78 +1,93 @@
 <%- include("../partials/top") %>
-<%- include("../partials/navbar") %>
-<%- include("../partials/sidebar") %>
-<!-- ============================================================== -->
-<!-- Page wrapper  -->
-<!-- ============================================================== -->
-<div class="page-wrapper">
-    <!-- ============================================================== -->
-    <!-- Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Event gallery</h4>
-            </div>
-        </div>
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Container fluid  -->
-    <!-- ============================================================== -->
-    <div class="container-fluid">
-        <div class="row">
-            <% events.forEach((evt)=> { %>
-                <div class="col-md-4 mb-2">
-                    <div class="card h-100">
-                        <div class="card-header d-flex justify-content-between">
-                            <p>
-                                <%= evt.title; %>
-                            </p>
-                            <span>
+    <%- include("../partials/navbar") %>
+        <%- include("../partials/sidebar") %>
+            <!-- ============================================================== -->
+            <!-- Page wrapper  -->
+            <!-- ============================================================== -->
+            <div class="page-wrapper">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="page-breadcrumb">
+                    <div class="row">
+                        <div class="col-12 d-flex no-block align-items-center">
+                            <h4 class="page-title">Event gallery</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Container fluid  -->
+                <!-- ============================================================== -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <% events.forEach((evt)=> { %>
+                            <div class="col-md-4 mb-2">
+                                <div class="card h-100">
+                                    <div class="card-header d-flex justify-content-between">
+                                        <p>
+                                            <%= evt.title; %>
+                                        </p>
+                                        <span>
                                             <p>Pocetak Eventa</p>
                                             <%= dayjs(evt.startAt).format("YYYY-MM-DD"); %>
                                                 <p>Kraj Eventa</p>
                                                 <%= dayjs(evt.endAt).format("YYYY-MM-DD"); %>
 
                                         </span>
-                        </div>
+                                    </div>
 
-                        <div class="card-body">
+                                    <div class="card-body">
 
-                            <% if (evt.thumbnail) { %>
-                                <img src="/<%= evt.thumbnail; %>" alt="slika" class="img-fluid mb-2"
-                                     style="max-height:150px; object-fit:cover;">
-                            <% } %>
-                            <span>User:</span>
-                            <%= evt.user.firstName || 'Nepoznato'; %>
-                            <%= evt.user.lastName; %>
+                                        <% if (evt.thumbnail) { %>
+                                            <img src="/<%= evt.thumbnail; %>" alt="slika" class="img-fluid mb-2"
+                                                style="max-height:150px; object-fit:cover;">
+                                            <% } %>
+                                                <span>User:</span>
+                                                <%= evt.user.firstName || 'Nepoznato' ; %>
+                                                    <%= evt.user.lastName; %>
 
-                            <hr>
-                            <%= evt.description; %>
+                                                        <hr>
+                                                        <%= evt.description; %>
 
-                        </div>
+                                                            <form action="/event/like/<%= evt._id %>" method="post"
+                                                                class="mt-2 d-flex align-items-center">
+                                                                <button type="submit"
+                                                                    class="btn btn-outline-primary btn-sm me-2">
+                                                                    ❤️ Like
+                                                                </button>
+                                                                <span>
+                                                                    <%= evt.likes ? evt.likes.length : 0 %> lajkova
+                                                                </span>
+                                                            </form>
+                                                            <a href="/event/<%= evt._id %>"
+                                                                class="btn btn-outline-secondary btn-sm mt-2">
+                                                                 View more
+                                                            </a>
 
-                        <%- include("deleteEventBtn",{user,evt}) %>
+                                                            <%- include("deleteEventBtn",{user,evt}) %>
+                                    </div>
 
+
+                                </div>
+                            </div>
+                            <% }); %>
                     </div>
+                    <!-- ============================================================== -->
+                    <!-- End Container fluid  -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- footer -->
+                    <!-- ============================================================== -->
+                    <footer class="footer text-center">
+                        All Rights Reserved by Matrix-admin. Designed and Developed by
+                        <a href="https://www.wrappixel.com">WrapPixel</a>.
+                    </footer>
+                    <!-- ============================================================== -->
+                    <!-- End footer -->
+                    <!-- ============================================================== -->
                 </div>
-            <% }); %>
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
-        <footer class="footer text-center">
-            All Rights Reserved by Matrix-admin. Designed and Developed by
-            <a href="https://www.wrappixel.com">WrapPixel</a>.
-        </footer>
-        <!-- ============================================================== -->
-        <!-- End footer -->
-        <!-- ============================================================== -->
-    </div>
 
-<%- include("../partials/bottom") %>
+                <%- include("../partials/bottom") %>

@@ -1,0 +1,46 @@
+<%- include("../partials/top") %>
+<%- include("../partials/navbar") %>
+<%- include("../partials/sidebar") %>
+
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title"><%= event.title %></h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+
+        <% if (event.thumbnail) { %>
+          <img src="/<%= event.thumbnail %>" alt="Event slika" class="img-fluid mb-3" style="max-height:300px; object-fit:cover;">
+        <% } %>
+
+        <h5>Opis:</h5>
+        <p><%= event.description %></p>
+
+        <hr>
+
+       <p><strong>Autor:</strong> <%= event.userData.firstName %> <%= event.userData.lastName %></p>
+
+        <p><strong>Početak:</strong> <%= dayjs(event.startAt).format("YYYY-MM-DD HH:mm") %></p>
+        <p><strong>Kraj:</strong> <%= dayjs(event.endAt).format("YYYY-MM-DD HH:mm") %></p>
+
+        <hr>
+
+        <form action="/event/like/<%= event._id %>" method="post" class="d-flex align-items-center">
+          <button type="submit" class="btn btn-outline-primary btn-sm me-2">❤️ Like</button>
+          <span><%= event.likes ? event.likes.length : 0 %> lajkova</span>
+        </form>
+
+        
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include("../partials/bottom") %>
