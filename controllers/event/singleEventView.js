@@ -9,6 +9,7 @@ const singleEventView = async (req, res) => {
   try {
    
     const result = await EventModel.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(id) } },
       {
         $lookup: {
           from: "users",             
