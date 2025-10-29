@@ -15,8 +15,6 @@ server.use(session(SESSION_CONFIG));
 
 server.use(fileUpload());
 
-
-
 mongoose
   .connect(MONGODB_URL)
   .then(() => console.log("MongoDb connected"))

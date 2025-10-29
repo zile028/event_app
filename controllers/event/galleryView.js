@@ -5,7 +5,7 @@ const UserModel = require("../../models/UserModel");
 const galleryView = async (req, res) => {
     let page = parseInt(req.query.page) ? parseInt(req.query.page) : 1;
     let limit = parseInt(req.query.limit) ? parseInt(req.query.limit) : 3;
-
+    
     let offset = (page - 1) * limit;
     try {
         const events = await EventModel.aggregate([

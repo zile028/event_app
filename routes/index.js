@@ -4,9 +4,8 @@ const router = require("express").Router();
 router.get("/", isLogged, (req, res) => {
     res.render("index", {user: req.session.user});
 });
-
-router.use("/auth", require("./auth"));
-router.use("/event", require("./event"));
 router.use("/user", require("./user"));
+router.use("/auth", require("./auth"));
+router.use("/event", isLogged, require("./event"));
 
 module.exports = router;

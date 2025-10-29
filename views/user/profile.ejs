@@ -1,0 +1,389 @@
+<%- include("../partials/top") %> <%- include("../partials/navbar") %> <%-
+include("../partials/sidebar") %>
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Korisnički profil</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/">Početna</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Moj profil
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- Success Message -->
+    <% if (success) { %>
+    <div class="row">
+      <div class="col-12">
+        <div
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <i class="mdi mdi-check-circle"></i>
+          <strong>Uspešno!</strong> Profil je ažuriran.
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- ============================================================== -->
+    <!-- User Profile Card  -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-lg-4 col-xlg-3 col-md-5">
+        <div class="card">
+          <div class="card-body">
+            <center class="mt-4">
+              <img
+                src="/<%= user.avatar %>"
+                class="rounded-circle"
+                width="150"
+              />
+              <h4 class="card-title mt-2">
+                <%= user.firstName %> <%= user.lastName %>
+              </h4>
+              <h6 class="card-subtitle">
+                <span
+                  class="badge bg-<%= user.role === 'admin' ? 'danger' : user.role === 'manager' ? 'warning' : 'info' %>"
+                  ><%= user.role %></span
+                >
+              </h6>
+              <div class="mt-3">
+                <a href="/user/edit" class="btn btn-primary btn-sm">
+                  <i class="mdi mdi-pencil"></i> Edituj profil
+                </a>
+              </div>
+              <div class="row text-center justify-content-md-center">
+                <div class="col-6">
+                  <a href="javascript:void(0)" class="link">
+                    <i class="icon-calendar"></i>
+                    <font class="font-medium"><%= totalUserEvents || 0 %></font>
+                    <div><small>Događaji</small></div>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <a href="javascript:void(0)" class="link">
+                    <i class="icon-heart"></i>
+                    <font class="font-medium"
+                      ><%= user.favorites ? user.favorites.length : 0 %></font
+                    >
+                    <div><small>Omiljeni</small></div>
+                  </a>
+                </div>
+              </div>
+            </center>
+          </div>
+          <div>
+            <hr />
+          </div>
+          <div class="card-body">
+            <small class="text-muted">Email adresa</small>
+            <h6><%= user.email %></h6>
+            <small class="text-muted pt-4 db">Status</small>
+            <h6>
+              <% if (user.active) { %>
+              <span class="badge bg-success">Aktivni</span>
+              <% } else { %>
+              <span class="badge bg-danger">Neaktivni</span>
+              <% } %>
+            </h6>
+            <small class="text-muted pt-4 db">Datum registracije</small>
+            <h6>
+              <%= new Date(user.createdAt).toLocaleDateString('sr-RS', { year:
+              'numeric', month: 'long', day: 'numeric' }) %>
+            </h6>
+            <small class="text-muted pt-4 db">Poslednje ažuriranje</small>
+            <h6>
+              <%= new Date(user.updatedAt).toLocaleDateString('sr-RS', { year:
+              'numeric', month: 'long', day: 'numeric' }) %>
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+          <!-- Tabs Navigation -->
+          <ul class="nav nav-pills custom-pills" id="pills-tab" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                id="pills-timeline-tab"
+                data-bs-toggle="pill"
+                href="#current-month"
+                role="tab"
+                aria-controls="pills-timeline"
+                aria-selected="true"
+                >Osnovne informacije</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="pills-profile-tab"
+                data-bs-toggle="pill"
+                href="#last-month"
+                role="tab"
+                aria-controls="pills-profile"
+                aria-selected="false"
+                >Moji događaji</a
+              >
+            </li>
+          </ul>
+          <!-- Tab Content -->
+          <div class="tab-content" id="pills-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="current-month"
+              role="tabpanel"
+              aria-labelledby="pills-timeline-tab"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3 col-xs-6 b-r">
+                    <strong>Ime</strong>
+                    <br />
+                    <p class="text-muted"><%= user.firstName %></p>
+                  </div>
+                  <div class="col-md-3 col-xs-6 b-r">
+                    <strong>Prezime</strong>
+                    <br />
+                    <p class="text-muted"><%= user.lastName %></p>
+                  </div>
+                  <div class="col-md-3 col-xs-6 b-r">
+                    <strong>Email</strong>
+                    <br />
+                    <p class="text-muted"><%= user.email %></p>
+                  </div>
+                  <div class="col-md-3 col-xs-6">
+                    <strong>Uloga</strong>
+                    <br />
+                    <p class="text-muted"><%= user.role %></p>
+                  </div>
+                </div>
+                <hr />
+                <h4 class="font-medium mt-4">O korisniku</h4>
+                <p>
+                  Korisnik aplikacije za upravljanje događajima. Registrovan <%=
+                  new Date(user.createdAt).toLocaleDateString('sr-RS') %>.
+                </p>
+
+                <h4 class="font-medium mt-4">Statistike</h4>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="d-flex no-block align-items-center">
+                      <span>
+                        <i class="icon-heart text-danger"></i>
+                        <strong>Omiljeni događaji</strong>
+                      </span>
+                      <div class="ms-auto">
+                        <span class="counter text-primary">
+                          <%= user.favorites ? user.favorites.length : 0 %>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex no-block align-items-center">
+                      <span>
+                        <i class="icon-calendar text-info"></i>
+                        <strong>Kreiran događaji</strong>
+                      </span>
+                      <div class="ms-auto">
+                        <span class="counter text-success">
+                          <%= totalUserEvents || 0 %>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-6">
+                    <div class="d-flex no-block align-items-center">
+                      <span>
+                        <i class="icon-check text-success"></i>
+                        <strong>Status naloga</strong>
+                      </span>
+                      <div class="ms-auto">
+                        <% if (user.active) { %>
+                        <span class="text-success">Aktivan</span>
+                        <% } else { %>
+                        <span class="text-danger">Neaktivan</span>
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex no-block align-items-center">
+                      <span>
+                        <i class="icon-user text-warning"></i>
+                        <strong>Uloga</strong>
+                      </span>
+                      <div class="ms-auto">
+                        <span
+                          class="badge bg-<%= user.role === 'admin' ? 'danger' : user.role === 'manager' ? 'warning' : 'info' %>"
+                        >
+                          <%= user.role %>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="last-month"
+              role="tabpanel"
+              aria-labelledby="pills-profile-tab"
+            >
+              <div class="card-body">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-4"
+                >
+                  <h4>Moji događaji</h4>
+                  <a href="/event/create" class="btn btn-primary btn-sm">
+                    <i class="mdi mdi-plus"></i> Kreiraj novi događaj
+                  </a>
+                </div>
+
+                <% if (userEvents && userEvents.length > 0) { %>
+                <div class="row">
+                  <% userEvents.forEach(event => { %>
+                  <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card">
+                      <% if (event.thumbnail) { %>
+                      <img
+                        src="/<%= event.thumbnail %>"
+                        class="card-img-top"
+                        alt="<%= event.title %>"
+                        style="height: 200px; object-fit: cover"
+                      />
+                      <% } %>
+                      <div class="card-body">
+                        <h6 class="card-title"><%= event.title %></h6>
+                        <p class="card-text small text-muted">
+                          <%= event.description.length > 100 ?
+                          event.description.substring(0, 100) + '...' :
+                          event.description %>
+                        </p>
+                        <div class="mb-2">
+                          <small class="text-muted">
+                            <i class="mdi mdi-calendar"></i>
+                            <%= dayjs(event.startAt).format("DD.MM.YYYY") %> -
+                            <%= dayjs(event.endAt).format("DD.MM.YYYY") %>
+                          </small>
+                        </div>
+                        <div class="mb-2">
+                          <small class="text-muted">
+                            <i class="mdi mdi-clock"></i>
+                            Kreiran: <%=
+                            dayjs(event.createdAt).format("DD.MM.YYYY") %>
+                          </small>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                          <a
+                            href="/event"
+                            class="btn btn-outline-primary btn-sm"
+                          >
+                            <i class="mdi mdi-eye"></i> Pogledaj
+                          </a>
+                          <form
+                            method="POST"
+                            action="/event/delete/<%= event._id %>"
+                            style="display: inline"
+                          >
+                            <button
+                              type="submit"
+                              class="btn btn-outline-danger btn-sm"
+                              onclick="return confirm('Da li ste sigurni da želite da obrišete ovaj događaj?')"
+                            >
+                              <i class="mdi mdi-delete"></i> Obriši
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% }); %>
+                </div>
+
+                <% if (totalUserEvents > userEvents.length) { %>
+                <div class="text-center mt-3">
+                  <p class="text-muted">
+                    Prikazano <%= userEvents.length %> od <%= totalUserEvents %>
+                    događaja
+                  </p>
+                  <a href="/event" class="btn btn-outline-secondary">
+                    <i class="mdi mdi-view-list"></i> Pogledaj sve događaje
+                  </a>
+                </div>
+                <% } %> <% } else { %>
+                <div class="text-center py-5">
+                  <i
+                    class="mdi mdi-calendar-blank"
+                    style="font-size: 4rem; color: #ccc"
+                  ></i>
+                  <h5 class="mt-3 text-muted">Nema kreiraných događaja</h5>
+                  <p class="text-muted">
+                    Još uvek niste kreirali nijedan događaj. Kliknite na dugme
+                    iznad da kreirate svoj prvi događaj.
+                  </p>
+                  <a href="/event/create" class="btn btn-primary">
+                    <i class="mdi mdi-plus"></i> Kreiraj prvi događaj
+                  </a>
+                </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End User Profile Card  -->
+    <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <footer class="footer text-center">
+    All Rights Reserved by Matrix-admin. Designed and Developed by
+    <a href="https://www.wrappixel.com">WrapPixel</a>.
+  </footer>
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->
+<%- include("../partials/bottom") %>

@@ -1,0 +1,263 @@
+<%- include("../partials/top") %> <%- include("../partials/navbar") %> <%-
+include("../partials/sidebar") %>
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Edituj profil</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/">Početna</a></li>
+              <li class="breadcrumb-item">
+                <a href="/user/profile">Moj profil</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Edituj profil
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- User Edit Form  -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-lg-4 col-xlg-3 col-md-5">
+        <div class="card">
+          <div class="card-body">
+            <center class="mt-4">
+              <img
+                src="/<%= user.avatar %>"
+                id="avatarPreview"
+                class="rounded-circle"
+                width="150"
+              />
+              <h4 class="card-title mt-2">
+                <%= user.firstName %> <%= user.lastName %>
+              </h4>
+              <h6 class="card-subtitle">
+                <span
+                  class="badge bg-<%= user.role === 'admin' ? 'danger' : user.role === 'manager' ? 'warning' : 'info' %>"
+                  ><%= user.role %></span
+                >
+              </h6>
+              <div class="mt-3">
+                <a href="/user/profile" class="btn btn-secondary btn-sm">
+                  <i class="mdi mdi-arrow-left"></i> Nazad na profil
+                </a>
+              </div>
+            </center>
+          </div>
+          <div>
+            <hr />
+          </div>
+          <div class="card-body">
+            <small class="text-muted">Email adresa</small>
+            <h6><%= user.email %></h6>
+            <small class="text-muted pt-4 db">Status</small>
+            <h6>
+              <% if (user.active) { %>
+              <span class="badge bg-success">Aktivni</span>
+              <% } else { %>
+              <span class="badge bg-danger">Neaktivni</span>
+              <% } %>
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Ažuriraj profil</h4>
+
+            <!-- Prikaz grešaka -->
+            <% if (errors && errors.length > 0) { %>
+            <div
+              class="alert alert-danger alert-dismissible fade show"
+              role="alert"
+            >
+              <h5><i class="mdi mdi-alert"></i> Greške:</h5>
+              <ul class="mb-0">
+                <% errors.forEach(error => { %>
+                <li><%= error %></li>
+                <% }); %>
+              </ul>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+            <% } %>
+
+            <form
+              class="form-horizontal form-material"
+              method="POST"
+              action="/user/edit"
+              enctype="multipart/form-data"
+            >
+              <!-- Avatar Upload -->
+              <div class="form-group">
+                <label class="col-md-12">Profilna slika</label>
+                <div class="col-md-12">
+                  <input
+                    type="file"
+                    class="form-control form-control-line"
+                    name="avatar"
+                    id="avatarInput"
+                    accept="image/*"
+                  />
+                  <small class="form-text text-muted">
+                    Dozvoljena su JPG, PNG i GIF formatovanja. Maksimalno 5MB.
+                  </small>
+                </div>
+              </div>
+
+              <!-- Osnovni podaci -->
+              <div class="form-group">
+                <label class="col-md-12">Ime *</label>
+                <div class="col-md-12">
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="Unesite ime"
+                    class="form-control form-control-line"
+                    value="<%= user.firstName %>"
+                    required
+                    minlength="3"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-12">Prezime *</label>
+                <div class="col-md-12">
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Unesite prezime"
+                    class="form-control form-control-line"
+                    value="<%= user.lastName %>"
+                    required
+                    minlength="3"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-12">Email *</label>
+                <div class="col-md-12">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Unesite email"
+                    class="form-control form-control-line"
+                    value="<%= user.email %>"
+                    required
+                  />
+                </div>
+              </div>
+
+              <hr class="my-4" />
+
+              <!-- Promena lozinke -->
+              <h5 class="card-title">Promena lozinke</h5>
+              <p class="text-muted">
+                Ostavite prazno ako ne želite da promenite lozinku
+              </p>
+
+              <div class="form-group">
+                <label class="col-md-12">Trenutna lozinka</label>
+                <div class="col-md-12">
+                  <input
+                    type="password"
+                    name="currentPassword"
+                    placeholder="Unesite trenutnu lozinku"
+                    class="form-control form-control-line"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-12">Nova lozinka</label>
+                <div class="col-md-12">
+                  <input
+                    type="password"
+                    name="newPassword"
+                    placeholder="Unesite novu lozinku (minimum 6 karaktera)"
+                    class="form-control form-control-line"
+                    minlength="6"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-12">Potvrda nove lozinke</label>
+                <div class="col-md-12">
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="Ponovite novu lozinku"
+                    class="form-control form-control-line"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-12 d-flex">
+                  <button type="submit" class="btn btn-success me-2">
+                    <i class="mdi mdi-content-save"></i> Sačuvaj izmene
+                  </button>
+                  <a href="/user/profile" class="btn btn-secondary">
+                    <i class="mdi mdi-cancel"></i> Otkaži
+                  </a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End User Edit Form  -->
+    <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <footer class="footer text-center">
+    All Rights Reserved by Matrix-admin. Designed and Developed by
+    <a href="https://www.wrappixel.com">WrapPixel</a>.
+  </footer>
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->
+
+<!-- Custom JavaScript for User Edit Profile -->
+<script src="/assets/js/utils/user-edit.js"></script>
+
+<%- include("../partials/bottom") %>
